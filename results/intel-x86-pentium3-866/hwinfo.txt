@@ -1,0 +1,30 @@
+[CPU]
+Architecture:            i386
+Byte Order:              Little Endian
+Total CPU(s):            1
+Vendor:                  GenuineIntel
+CPU family:              6
+Model:                   8
+Model name:              Intel Pentium III
+Stepping:                6
+L1d cache:               16K
+L1i cache:               16K
+L2 cache:                256K
+Flags:                   fpu vme de pse tsc msr pae mce cx8 sep mtrr pge mca cmov pat pse36 psn mmx fxsr sse
+[MEM]
+real memory  = 268435456 (256 MB)
+avail memory = 230854656 (220 MB)
+[MOM]
+# dmidecode 3.3
+Scanning /dev/mem for entry point.
+SMBIOS 2.3 present.
+
+Handle 0x0002, DMI type 2, 8 bytes
+Base Board Information
+	Manufacturer: ASUSTeK Computer INC.
+	Product Name: <P3B-F>
+	Version: REV 1.xx
+	Serial Number: xxxxxxxxxxx
+
+[OS]
+FreeBSD LimStation 11.2-RELEASE-p14 FreeBSD 11.2-RELEASE-p14 #0: Mon Aug 19 22:14:55 UTC 2019     root@amd64-builder.daemonology.net:/usr/obj/usr/src/sys/GENERIC  i386
