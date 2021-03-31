@@ -1,0 +1,10 @@
+[ ALU ]              1273
+       Fibonacci:     593
+       Napierian:     158
+    Eratosthenes:     450
+       QuickSort:      72
+[ FPU ]               948
+         MikoFpu:       7
+      RandMeanSS:     169
+             FFT:     726
+      Mandelbrot:      46
