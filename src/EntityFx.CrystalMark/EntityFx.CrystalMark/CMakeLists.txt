@@ -9,3 +9,8 @@ add_executable (EntityFx.CrystalMark "Main.cpp" "Main.h" "CrystalBenchmarkBase.h
 # TODO: Add tests and install targets if needed.
 find_package(Threads REQUIRED)
 target_link_libraries(EntityFx.CrystalMark PRIVATE Threads::Threads)
+
+IF(CMAKE_COMPILER_IS_GNUCC)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} -O3 -ffast")
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_DEBUG} -O3 -ffast")
+ENDIF(CMAKE_COMPILER_IS_GNUCC)
