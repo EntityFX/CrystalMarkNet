@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace CrystalMarkNet.FPU
+namespace EntityFX.CrystalMarkNet.FPU
 {
     class Mandelbrot : CrystalBenchmarkBase
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace CrystalMarkNet.ALU
+namespace EntityFX.CrystalMarkNet.ALU
 {
     class Napierian : CrystalBenchmarkBase
     {
@@ -9,6 +9,8 @@ namespace CrystalMarkNet.ALU
         private const ushort RADIXBITS = 15;
 
         private const ushort RADIX = (1 << RADIXBITS);
+
+        private const ushort H_RADIX = RADIX / 2;
 
         protected override int BenchImplementation(CancellationToken cancellationToken)
         {
@@ -20,12 +22,17 @@ namespace CrystalMarkNet.ALU
             {
                 int m;
                 uint k;
-                for (m = 0; m <= N; m++)
+                //for (m = 0; m <= N; m++)
+                //{
+                //    a[m] = t[m] = 0;
+                //}                
+
+                for (m = 0; m <= N; m += 2)
                 {
-                    a[m] = t[m] = 0;
+                    a[m + 1] = t[m + 1] = a[m] = t[m] = 0;
                 }
                 a[0] = 2;
-                a[1] = t[1] = RADIX / 2;
+                a[1] = t[1] = H_RADIX;
                 k = 3; m = 1;
                 while ((m = Divs(m, t, k, t)) <= N)
                 {
@@ -69,10 +76,14 @@ namespace CrystalMarkNet.ALU
             int i;
             ushort u = 0;
 
-            for (i = N; i >= 0; i--)
+            for (i = N; i >= 0; i-=2)
             {
                 u += (ushort)(a[i] + b[i]);
                 c[i] = (ushort)(u & (RADIX - 1));
+                u >>= RADIXBITS;
+
+                u += (ushort)(a[i - 1] + b[i - 1]);
+                c[i - 1] = (ushort)(u & (RADIX - 1));
                 u >>= RADIXBITS;
             }
         }

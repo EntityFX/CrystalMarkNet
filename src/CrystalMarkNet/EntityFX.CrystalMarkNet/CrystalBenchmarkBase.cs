@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CrystalMarkNet
+namespace EntityFX.CrystalMarkNet
 {
     abstract class CrystalBenchmarkBase : ICrystalBenchmark
     {

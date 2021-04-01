@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace CrystalMarkNet.ALU
+namespace EntityFX.CrystalMarkNet.ALU
 {
     class Fibonacci : CrystalBenchmarkBase
     {

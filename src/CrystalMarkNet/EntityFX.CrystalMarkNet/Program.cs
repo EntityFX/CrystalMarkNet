@@ -1,17 +1,10 @@
 ﻿using System;
-using CrystalMarkNet.ALU;
-using CrystalMarkNet.FPU;
+using EntityFX.CrystalMarkNet.ALU;
+using EntityFX.CrystalMarkNet.FPU;
+using EntityFX.CrystalMarkNet.Memory;
 
-namespace CrystalMarkNet
+namespace EntityFX.CrystalMarkNet
 {
-    interface ICrystalBenchmark
-    {
-        int Bench(int threads);
-
-        string Name { get; }
-    }
-
-
     class Program
     {
 
@@ -19,11 +12,20 @@ namespace CrystalMarkNet
         static void Main(string[] args)
         {
             var threads = Environment.ProcessorCount;
+            //threads = 1;
 
             if (args.Length > 0)
             {
                 Int32.TryParse(args[0], out threads);
             }
+
+            
+
+            var memoryGroup = new CrystalBenchmarkGroup(new ICrystalBenchmark[]
+            {
+                 new Read(), new Write(), new ReadWrite(), 
+            }, "Memory");
+
 
             var aluGroup = new CrystalBenchmarkGroup(new ICrystalBenchmark[]
             {
@@ -36,17 +38,24 @@ namespace CrystalMarkNet
                  new MikoFpu(), new RandMeanSS(), new FFT(), new Mandelbrot()
             }, "FPU");
 
-            var groups = new CrystalBenchmarkGroup[] { aluGroup, fpuGroup };
+            var groups = new CrystalBenchmarkGroup[] { memoryGroup, aluGroup, fpuGroup };
 
             foreach (var benchmarkGroup in groups)
             {
+                Console.WriteLine("{0,-17}", string.Format("[ {0} ]", benchmarkGroup.Name));
+                //Console.WriteLine("{0,-17}{1,8}", string.Format("[ {0} ]", benchmarkGroup.Name), result);
+                benchmarkGroup.OnResult = (sender, pair) =>
+                {
+                    Console.WriteLine("{0,16}:{1,8}", pair.Key, pair.Value);
+                };
+
                 var result = benchmarkGroup.Bench(threads);
 
-                Console.WriteLine("{0,-17}{1,8}", string.Format("[ {0} ]", benchmarkGroup.Name), result);
-                foreach (var groupResult in benchmarkGroup.Results)
-                {
-                    Console.WriteLine("{0,16}:{1,8}", groupResult.Key, groupResult.Value);
-                }
+
+                //foreach (var groupResult in benchmarkGroup.Results)
+                //{
+                //    Console.WriteLine("{0,16}:{1,8}", groupResult.Key, groupResult.Value);
+                //}
 
             }
 

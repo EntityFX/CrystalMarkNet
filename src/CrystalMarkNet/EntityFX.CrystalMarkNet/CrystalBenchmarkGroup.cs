@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace CrystalMarkNet
+namespace EntityFX.CrystalMarkNet
 {
     class CrystalBenchmarkGroup : CrystalBenchmarkBase
     {
         private readonly ICrystalBenchmark[] _crystalBenchmarks;
 
-        public Dictionary<string, int> Results { get; } = new Dictionary<string, int>(); 
+        public Dictionary<string, int> Results { get; } = new Dictionary<string, int>();
+
+        public EventHandler<KeyValuePair<string, int>> OnResult { get; set; }
 
 
         public CrystalBenchmarkGroup(ICrystalBenchmark[] crystalBenchmarks, string groupName)
@@ -24,6 +27,9 @@ namespace CrystalMarkNet
             foreach (var crystalBenchmark in _crystalBenchmarks)
             {
                 Results[crystalBenchmark.Name] = crystalBenchmark.Bench(threads);
+
+                OnResult?.Invoke(this, 
+                    new KeyValuePair<string, int>(crystalBenchmark.Name, Results[crystalBenchmark.Name]));
             }
 
             return Results.Values.Sum();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace CrystalMarkNet.FPU
+namespace EntityFX.CrystalMarkNet.FPU
 {
     class RandMeanSS : CrystalBenchmarkBase
     {
@@ -16,12 +16,23 @@ namespace CrystalMarkNet.FPU
             long holdrand = 1;
             int count = 0;
 
+            double q = (1.0 / (32767 + 1.0));
+
             for (; ; )
             {
-                for (i = 0; i < N; i++)
+                for (i = 0; i < N; i+=4)
                 {
                     holdrand = ((holdrand * 214013L + 2531011L) >> 16) & 0x7fff;
-                    d[i] = (double)((1.0 / (32767 + 1.0)) * holdrand);
+                    d[i] = q * holdrand;
+
+                    holdrand = ((holdrand * 214013L + 2531011L) >> 16) & 0x7fff;
+                    d[i + 1] = q * holdrand;
+
+                    holdrand = ((holdrand * 214013L + 2531011L) >> 16) & 0x7fff;
+                    d[i + 2] = q * holdrand;
+
+                    holdrand = ((holdrand * 214013L + 2531011L) >> 16) & 0x7fff;
+                    d[i + 3] = q * holdrand;
                 }
 
                 s1 = s2 = 0.0f;

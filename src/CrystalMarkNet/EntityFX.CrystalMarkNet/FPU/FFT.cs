@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace CrystalMarkNet.FPU
+namespace EntityFX.CrystalMarkNet.FPU
 {
     class FFT : CrystalBenchmarkBase
     {
@@ -20,11 +20,14 @@ namespace CrystalMarkNet.FPU
 
             for (; ; )
             {
-                for (i = 0; i < N; i++)
+                for (i = 0; i < N; i+=4)
                 {
                     x = -2 * PI + (float)i * 4.0f * PI / (float)N;
-                    fr[i] = (float)(Math.Sin(x) + Math.Sin(2.0f * x));
+                    fr[i + 3] = fr[i + 2] = fr[i + 1] = fr[i] = (float)(Math.Sin(x) + Math.Sin(2.0f * x));
                     fi[i] = 0.0f;
+                    fi[i + 1] = 0.0f;
+                    fi[i + 2] = 0.0f;
+                    fi[i + 3] = 0.0f;
                 }
 
                 Bitreverse(ref fr, N);
@@ -73,8 +76,15 @@ namespace CrystalMarkNet.FPU
                 }
                 b[i] = a[k];
             }
-            for (i = 0; i < N; i++)
+
+            for (i = 0; i < N; i+=4)
+            {
                 a[i] = b[i];
+                a[i + 1] = b[i + 1];
+                a[i + 2] = b[i + 2];
+                a[i + 3] = b[i + 3];
+            }
+
         }
     }
 }
