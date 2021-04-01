@@ -1,7 +1,7 @@
 #include "Fibonacci.h"
 #include <iostream>
 
-int Fibonacci::benchImplementation(const std::atomic_bool& cancelled) {
+int Fibonacci::bench_implementation(const std::atomic_bool& cancelled) {
     long long count = 0;
     int n = 0;
 
@@ -38,8 +38,12 @@ int Fibonacci::benchImplementation(const std::atomic_bool& cancelled) {
 
         if (cancelled)
         {
-            return count / 2200 / 2000;
+            return count / 2200 / 2500;
         }
     }
 	return count;
+}
+
+string Fibonacci::get_name() {
+    return "Fibonacci";
 }

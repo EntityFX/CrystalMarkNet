@@ -1,7 +1,7 @@
 #include "Napierian.h"
 #include <iostream>
 
-int Napierian::benchImplementation(const std::atomic_bool& cancelled) {
+int Napierian::bench_implementation(const std::atomic_bool& cancelled) {
     long long count = 0;
     unsigned short* a = new unsigned short[N + 1];
     unsigned short* t = new unsigned short[N + 1];
@@ -25,7 +25,7 @@ int Napierian::benchImplementation(const std::atomic_bool& cancelled) {
 
         if (cancelled)
         {
-            return (int)(count / 3.4);
+            return (int)(count / 3.4 / 2);
         }
     }
     return count;
@@ -68,4 +68,8 @@ void Napierian::add(unsigned short a[], unsigned short b[], unsigned short c[])
         c[i - 1] = u & (RADIX - 1);
         u >>= RADIXBITS;
     }
+}
+
+string Napierian::get_name() {
+    return "Napierian";
 }

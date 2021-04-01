@@ -7,33 +7,27 @@
 #include "ALU/Eratosthenes.h"
 #include "ALU/QuickSort.h"
 #include "CrystalBenchmarkBase.h"
-#include <string>
-#include <chrono>
-#include <omp.h>
+
 
 using namespace std;
 using namespace std::chrono;
 
 int main()
 {
-	ICrystalBenchmark * bench = new Fibonacci();
-	int result = bench->bench(1);
-	cout << result << "\n";
+	int threads = std::thread::hardware_concurrency();
 
-	ICrystalBenchmark* bench2 = new Napierian();
-	int result2 = bench2->bench(1);
+	vector<ICrystalBenchmark*> benchs{ new Fibonacci(), new Napierian(), new Eratosthenes(), new QuickSort() };
 
-	cout << result2 << "\n";
+	int aluSum = 0;
+	cout << "[ALU]" << "\n";
+	for (auto& bench : benchs) // access by reference to avoid copying
+	{
+		int result = bench->bench(threads);
+		cout << string_sprintf("%-12s: %6d", bench->get_name(), result) << "\n";
+		aluSum += result;
+	}
 
-	ICrystalBenchmark* bench3 = new Eratosthenes();
-	int result3 = bench3->bench(1);
-
-	cout << result3 << "\n";
-
-	ICrystalBenchmark* bench4 = new QuickSort();
-	int result4 = bench4->bench(1);
-
-	cout << result4 << "\n";
+	cout << string_sprintf("%-12s: %6d", "[ALU]", aluSum) << "\n";
 
 	return 0;
 }

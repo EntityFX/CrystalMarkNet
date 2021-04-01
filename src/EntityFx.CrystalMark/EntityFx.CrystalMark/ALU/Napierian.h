@@ -11,9 +11,10 @@ class Napierian : public CrystalBenchmarkBase
 	static const unsigned short RADIX = (1 << RADIXBITS);
 
 	static const unsigned short H_RADIX = RADIX / 2;
-
+public:
+	string get_name() override;
 protected:
-	virtual int	benchImplementation(const std::atomic_bool& cancelled) override;
+	virtual int	bench_implementation(const std::atomic_bool& cancelled) override;
 private:
 	static int divs(int m, unsigned short a[], unsigned int x, unsigned short b[]);
 	static void add(unsigned short a[], unsigned short b[], unsigned short c[]);

@@ -2,13 +2,14 @@
 
 #include <string>
 #include <future>
+#include <vector>
 
 using namespace std;
 
 class ICrystalBenchmark
 {
 public:
-	string Name;
+	virtual string get_name() = 0;
 	virtual ~ICrystalBenchmark() {}
 	virtual int bench(int threads) = 0;
 };
@@ -19,6 +20,6 @@ public:
 	virtual int bench(int threads);
 protected:
 	bool isLoopEnd = false;
-	virtual int	benchImplementation(const std::atomic_bool& cancelled) = 0;
-	int benchAll(int threads);
+	virtual int	bench_implementation(const std::atomic_bool& cancelled) = 0;
+	int bench_all(int threads);
 };
