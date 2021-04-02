@@ -39,6 +39,8 @@ int CrystalBenchmarkBase::bench_all(int threads)
 	for (int i = 0; i < threads; ++i) {
 		readyFutures.push_back(futures[i].get());
 	}
+	
+	cancellation_token = false;
 
 	int result = 0;
 
