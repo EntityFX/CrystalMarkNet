@@ -1,6 +1,7 @@
 
 #include "RandMeanSS.h"
 #include <iostream>
+#include <cmath> 
 
 int RandMeanSS::bench_implementation(const std::atomic_bool& cancelled) {
     int count = 0;
