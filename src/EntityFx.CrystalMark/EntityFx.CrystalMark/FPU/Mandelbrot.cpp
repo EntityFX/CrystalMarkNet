@@ -44,11 +44,11 @@ int Mandelbrot::bench_implementation(const std::atomic_bool& cancelled) {
 
 			if (cancelled)
 			{
-				return (int)(count / 100000 / 30);
+				return (int)(count / 40);
 			}
 		}
-		return count;
 	}
+	return count;
 }
 
 string Mandelbrot::get_name() {

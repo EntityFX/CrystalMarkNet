@@ -44,6 +44,6 @@ int main()
 	}
 
 	cout << string_sprintf("%-12s: %6d", "[FPU]", fpuSum) << "\n";
-
+	cout << string_sprintf("%-12s: %6d", "Total", aluSum + fpuSum) << "\n";
 	return 0;
 }

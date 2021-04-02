@@ -25,7 +25,7 @@ int Napierian::bench_implementation(const std::atomic_bool& cancelled) {
 
         if (cancelled)
         {
-            return (int)(count / 3.4 / 2);
+            return (int)(count / 3.4 );
         }
     }
     return count;

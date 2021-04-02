@@ -32,7 +32,7 @@ int RandMeanSS::bench_implementation(const std::atomic_bool& cancelled) {
         {
             delete[] d;
 
-            return count / 90;
+            return count / 90 / 80;
         }
     }
 

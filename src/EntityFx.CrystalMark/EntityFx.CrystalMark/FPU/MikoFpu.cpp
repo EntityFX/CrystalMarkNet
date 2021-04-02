@@ -32,7 +32,7 @@ int MikoFpu::bench_implementation(const std::atomic_bool& cancelled) {
 
         if (cancelled)
         {
-            return (int)(count / 100000 / 30);
+            return (int)(count / 100000 / 50);
         }
     }
     return count;

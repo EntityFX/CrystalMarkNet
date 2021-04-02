@@ -50,7 +50,7 @@ int FFT::bench_implementation(const std::atomic_bool& cancelled) {
 			delete [] fr;
 			delete [] fi;
 
-			return (int)(count * (N / 1470.0));
+			return (int)(count * (N / 1470.0 * 2));
 		}
 	}
 	return count;
