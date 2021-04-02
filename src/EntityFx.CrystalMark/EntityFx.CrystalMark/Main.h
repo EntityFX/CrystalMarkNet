@@ -6,16 +6,21 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <cstdio>
+#include <cstdarg>
 #include <vector>
 
-template< typename... Args >
-std::string string_sprintf(const char* format, Args... args) {
-	int length = std::snprintf(nullptr, 0, format, args...);
+#define _CRT_NO_VA_START_VALIDATION
 
-	char* buf = new char[length + 1];
-	std::snprintf(buf, length + 1, format, args...);
+std::string string_sprintf(const char* format, ...) {
+    char buf[100];     // this should really be sized appropriately
+                       // possibly in response to a call to vsnprintf()
+    va_list vl;
+    va_start(vl, format);
 
-	std::string str(buf);
-	delete[] buf;
-	return str;
+    vsnprintf(buf, sizeof(buf), format, vl);
+
+    va_end(vl);
+
+    return std::string(buf);
 }

@@ -8,7 +8,6 @@
 #include "ALU/QuickSort.h"
 #include "CrystalBenchmarkBase.h"
 
-
 using namespace std;
 using namespace std::chrono;
 
@@ -23,7 +22,7 @@ int main()
 	for (auto& bench : benchs) // access by reference to avoid copying
 	{
 		int result = bench->bench(threads);
-		cout << string_sprintf("%-12s: %6d", bench->get_name(), result) << "\n";
+		cout << string_sprintf("%-12s: %6d", bench->get_name().c_str(), result) << "\n";
 		aluSum += result;
 	}
 
