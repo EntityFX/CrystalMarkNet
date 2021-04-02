@@ -27,6 +27,6 @@ int Eratosthenes::bench_implementation(const std::atomic_bool& cancelled) {
     return count;
 }
 
-string Eratosthenes::get_name() {
+std::string Eratosthenes::get_name() {
     return "Eratosthenes";
 }

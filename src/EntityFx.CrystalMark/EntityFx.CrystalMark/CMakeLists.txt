@@ -4,7 +4,9 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Add source to this project's executable.
-add_executable (${PROJECT_NAME} "Main.cpp" "Main.h" "CrystalBenchmarkBase.h" "CrystalBenchmarkBase.cpp" "ALU/Fibonacci.h" "ALU/Fibonacci.cpp" "ALU/Napierian.h" "ALU/Napierian.cpp" "ALU/Eratosthenes.h" "ALU/Eratosthenes.cpp" "ALU/QuickSort.h" "ALU/QuickSort.cpp")
+add_executable (${PROJECT_NAME} "Main.cpp" "Main.h" "CrystalBenchmarkBase.h" "CrystalBenchmarkBase.cpp" 
+"ALU/Fibonacci.h" "ALU/Fibonacci.cpp" "ALU/Napierian.h" "ALU/Napierian.cpp" "ALU/Eratosthenes.h" "ALU/Eratosthenes.cpp" "FPU/MikoFpu.cpp" "ALU/QuickSort.h" "ALU/QuickSort.cpp"
+"FPU/MikoFpu.cpp" "FPU/MikoFpu.h" "FPU/Mandelbrot.h" "FPU/Mandelbrot.cpp" "FPU/FFT.h" "FPU/FFT.cpp" "FPU/RandMeanSS.h" "FPU/RandMeanSS.cpp")
 
 # TODO: Add tests and install targets if needed.
 find_package(Threads REQUIRED)
