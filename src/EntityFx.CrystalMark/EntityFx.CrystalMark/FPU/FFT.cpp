@@ -1,5 +1,6 @@
 #include "FFT.h"
 #include <iostream>
+#include <cmath> 
 
 int FFT::bench_implementation(const std::atomic_bool& cancelled) {
 	unsigned short count = 0;
