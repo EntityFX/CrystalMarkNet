@@ -2,7 +2,7 @@
 {
     interface ICrystalBenchmark
     {
-        int Bench(int threads);
+        double Bench(int threads, int benchTime = 10000);
 
         string Name { get; }
     }

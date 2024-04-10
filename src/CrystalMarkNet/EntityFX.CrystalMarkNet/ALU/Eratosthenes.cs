@@ -6,7 +6,7 @@ namespace EntityFX.CrystalMarkNet.ALU
     {
         private const int N = 1024;
 
-        protected override int BenchImplementation(CancellationToken cancellationToken)
+        protected override double BenchImplementation(CancellationToken cancellationToken)
         {
             int i, p, k, count = 0, cnt;
             bool[] flag = new bool[N + 1];
@@ -14,24 +14,13 @@ namespace EntityFX.CrystalMarkNet.ALU
             for (; ; )
             {
                 cnt = 1;
-                for (i = 0; i < N; i += 4)
-                {
-                    flag[i] = true;
-                    flag[i + 1] = true; 
-                    flag[i + 2] = true; 
-                    flag[i + 3] = true;
-                }
-                flag[N] = true;
-
+                for (i = 0; i <= N; i++) { flag[i] = true; }
                 for (i = 0; i <= N; i++)
                 {
                     if (flag[i])
                     {
                         p = i + i + 3;
-                        for (k = i + p; k <= N; k += p)
-                        {
-                            flag[k] = false;
-                        }
+                        for (k = i + p; k <= N; k += p) { flag[k] = false; }
                         cnt++;
                     }
                 }
@@ -39,7 +28,7 @@ namespace EntityFX.CrystalMarkNet.ALU
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    return (int)(count * (N / 70000.0 / 10));
+                    return count / 1000.0d / 26.4975d * N;
                 }
             }
         }

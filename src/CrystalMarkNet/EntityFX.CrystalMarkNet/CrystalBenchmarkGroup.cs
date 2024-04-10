@@ -9,9 +9,9 @@ namespace EntityFX.CrystalMarkNet
     {
         private readonly ICrystalBenchmark[] _crystalBenchmarks;
 
-        public Dictionary<string, int> Results { get; } = new Dictionary<string, int>();
+        public Dictionary<string, double> Results { get; } = new Dictionary<string, double>();
 
-        public EventHandler<KeyValuePair<string, int>> OnResult { get; set; }
+        public EventHandler<KeyValuePair<string, double>> OnResult { get; set; }
 
 
         public CrystalBenchmarkGroup(ICrystalBenchmark[] crystalBenchmarks, string groupName)
@@ -22,20 +22,20 @@ namespace EntityFX.CrystalMarkNet
 
         public override string Name { get; }
 
-        public override int Bench(int threads)
+        public override double Bench(int threads, int benchTime = DefaultTime)
         {
             foreach (var crystalBenchmark in _crystalBenchmarks)
             {
-                Results[crystalBenchmark.Name] = crystalBenchmark.Bench(threads);
+                Results[crystalBenchmark.Name] = crystalBenchmark.Bench(threads, benchTime);
 
                 OnResult?.Invoke(this, 
-                    new KeyValuePair<string, int>(crystalBenchmark.Name, Results[crystalBenchmark.Name]));
+                    new KeyValuePair<string, double>(crystalBenchmark.Name, Results[crystalBenchmark.Name]));
             }
 
             return Results.Values.Sum();
         }
 
-        protected override int BenchImplementation(CancellationToken cancellationToken)
+        protected override double BenchImplementation(CancellationToken cancellationToken)
         {
             return 0;
         }

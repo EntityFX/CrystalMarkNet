@@ -6,7 +6,7 @@ namespace EntityFX.CrystalMarkNet.FPU
     {
         private const int MemSize = 2048;
 
-        protected override int BenchImplementation(CancellationToken cancellationToken)
+        protected override double BenchImplementation(CancellationToken cancellationToken)
         {
             double count = 0;
 
@@ -39,7 +39,7 @@ namespace EntityFX.CrystalMarkNet.FPU
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    return (int) (count / 100000 / 30);
+                    return count / 30000;
                 }
             }
         }

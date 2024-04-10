@@ -5,14 +5,12 @@ namespace EntityFX.CrystalMarkNet.ALU
     class Napierian : CrystalBenchmarkBase
     {
         private const int N = 225;
-        private const int M = 250;
+
         private const ushort RADIXBITS = 15;
 
-        private const ushort RADIX = (1 << RADIXBITS);
+        private const ushort RADIX = 1 << RADIXBITS;
 
-        private const ushort H_RADIX = RADIX / 2;
-
-        protected override int BenchImplementation(CancellationToken cancellationToken)
+        protected override double BenchImplementation(CancellationToken cancellationToken)
         {
             int count = 0;
             ushort[] a = new ushort[N + 1];
@@ -22,34 +20,28 @@ namespace EntityFX.CrystalMarkNet.ALU
             {
                 int m;
                 uint k;
-                //for (m = 0; m <= N; m++)
-                //{
-                //    a[m] = t[m] = 0;
-                //}                
-
-                for (m = 0; m <= N; m += 2)
+                for (m = 0; m <= N; m++)
                 {
-                    a[m + 1] = t[m + 1] = a[m] = t[m] = 0;
+                    a[m] = t[m] = 0;
                 }
                 a[0] = 2;
-                a[1] = t[1] = H_RADIX;
+                a[1] = t[1] = RADIX / 2;
                 k = 3; m = 1;
-                while ((m = Divs(m, t, k, t)) <= N)
+                while ((m = Divs(m, ref t, k, ref t)) <= N)
                 {
                     Add(ref a, ref t, ref a);
                     ++k;
-
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        return (int)(count * 3.4) / 10;
-                    }
                 }
-                //	print(a);
                 count++;
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return count / 0.3197 * 4;
+                }
             }
         }
 
-        private static int Divs(int m, ushort[] a, uint x, ushort[] b)
+        private static int Divs(int m, ref ushort[] a, uint x, ref ushort[] b)
         {
             int i;
             ulong t = 0;
@@ -57,8 +49,7 @@ namespace EntityFX.CrystalMarkNet.ALU
             for (i = m; i <= N; i++)
             {
                 t = (t << RADIXBITS) + a[i];
-                b[i] = (ushort)(t / x);
-                t %= x;
+                b[i] = (ushort)(t / x); t %= x;
             }
 
             if (2 * t >= x)
@@ -74,17 +65,39 @@ namespace EntityFX.CrystalMarkNet.ALU
         private static void Add(ref ushort[] a, ref ushort[] b, ref ushort[] c)
         {
             int i;
-            ushort u = 0;
+            uint u = 0;
 
-            for (i = N; i >= 0; i-=2)
+            for (i = N; i >= 0; i--)
             {
-                u += (ushort)(a[i] + b[i]);
+                u += (uint)(a[i] + b[i]);
                 c[i] = (ushort)(u & (RADIX - 1));
                 u >>= RADIXBITS;
+            }
+        }
 
-                u += (ushort)(a[i - 1] + b[i - 1]);
-                c[i - 1] = (ushort)(u & (RADIX - 1));
-                u >>= RADIXBITS;
+        private static void Sub(ref ushort[] a, ref ushort[] b, ref ushort[] c)
+        {
+            int i;
+            uint u = 0;
+
+            for (i = N; i >= 0; i--)
+            {
+                u = (uint)(a[i] - b[i] - u);
+                c[i] = (ushort)(u & (RADIX - 1));
+                u = (u >>= RADIXBITS) & 1;
+            }
+        }
+
+        private static void Muls(ref ushort[] a, uint x, ref ushort[] b)
+        {
+            int i;
+            ulong t = 0;
+
+            for (i = N; i >= 0; i--)
+            {
+                t += (ulong)a[i] * x;
+                b[i] = (ushort)((uint)t & (RADIX - 1));
+                t >>= RADIXBITS;
             }
         }
     }

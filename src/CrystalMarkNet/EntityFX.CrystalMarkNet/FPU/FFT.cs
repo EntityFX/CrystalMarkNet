@@ -6,10 +6,10 @@ namespace EntityFX.CrystalMarkNet.FPU
     class FFT : CrystalBenchmarkBase
     {
         private const int N = 128;
-        protected override int BenchImplementation(CancellationToken cancellationToken)
+        protected override double BenchImplementation(CancellationToken cancellationToken)
         {
             ushort count = 0;
-            const float PI = 3.14159265358979f;
+            const float PI = (float)Math.PI;
 
             int i, j, k;
 
@@ -20,14 +20,11 @@ namespace EntityFX.CrystalMarkNet.FPU
 
             for (; ; )
             {
-                for (i = 0; i < N; i+=4)
+                for (i = 0; i < N; i++)
                 {
                     x = -2 * PI + (float)i * 4.0f * PI / (float)N;
-                    fr[i + 3] = fr[i + 2] = fr[i + 1] = fr[i] = (float)(Math.Sin(x) + Math.Sin(2.0f * x));
+                    fr[i] = (float)(Math.Sin(x) + Math.Sin(2.0f * x));
                     fi[i] = 0.0f;
-                    fi[i + 1] = 0.0f;
-                    fi[i + 2] = 0.0f;
-                    fi[i + 3] = 0.0f;
                 }
 
                 Bitreverse(ref fr, N);
@@ -38,13 +35,13 @@ namespace EntityFX.CrystalMarkNet.FPU
                     for (j = 0; j < k; j++)
                     {
                         w = 2.0f * (float)PI / (2.0f * (float)k);
-                        wr = (float)Math.Cos(w * j);                    
-                        wi = (float)-Math.Sin(w * j);             
+                        wr = (float)Math.Cos(w * j);     
+                        wi = (float)-Math.Sin(w * j);
                         for (i = j; i < N; i += (k * 2))
                         {
                             xr = wr * fr[i + k] - wi * fi[i + k];
                             xi = wr * fi[i + k] + wi * fr[i + k];
-                            fr[i + k] = fr[i] - xr; 
+                            fr[i + k] = fr[i] - xr;
                             fi[i + k] = fi[i] - xi;
                             fr[i] = fr[i] + xr;
                             fi[i] = fi[i] + xi;
@@ -55,7 +52,7 @@ namespace EntityFX.CrystalMarkNet.FPU
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    return (int)(count * (N / 1470.0));
+                    return (double)count * N / 1153.3980d * 25;
                 }
             }
         }
@@ -76,15 +73,10 @@ namespace EntityFX.CrystalMarkNet.FPU
                 }
                 b[i] = a[k];
             }
-
-            for (i = 0; i < N; i+=4)
+            for (i = 0; i < N; i++)
             {
                 a[i] = b[i];
-                a[i + 1] = b[i + 1];
-                a[i + 2] = b[i + 2];
-                a[i + 3] = b[i + 3];
             }
-
         }
     }
 }

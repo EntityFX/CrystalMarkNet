@@ -11,8 +11,8 @@ namespace EntityFX.CrystalMarkNet.FPU
         const double IS = -1.35;
         const double IE = 1.35;
 
-        const int XS = 640;
-        const int YS = 480;
+        const int XS = 256;
+        const int YS = 256;
 
         struct ri
         {
@@ -20,9 +20,8 @@ namespace EntityFX.CrystalMarkNet.FPU
             public double i;
         }
 
-        protected override int BenchImplementation(CancellationToken cancellationToken)
+        protected override double BenchImplementation(CancellationToken cancellationToken)
         {
-            ushort num = 1;
             ushort count = 0;
 
             int x, y, k, color = 0;
@@ -32,8 +31,6 @@ namespace EntityFX.CrystalMarkNet.FPU
 
             dr = (RE - RS) / XS;
             di = (IE - IS) / YS;
-
-            int[,] bitmap = new int[XS,YS];
 
             for (; ; )
             {
@@ -49,11 +46,9 @@ namespace EntityFX.CrystalMarkNet.FPU
                         {
                             z2.r = z.r * z.r - z.i * z.i + c.r;
                             z2.i = 2.0 * z.r * z.i + c.i;
-
                             if (z2.r * z2.r + z2.i * z2.i > 4.0)
                             {
                                 color = k * 8 << boost;
-                                bitmap[x, y] = color;
                                 break;
                             }
                             z = z2;
@@ -62,10 +57,11 @@ namespace EntityFX.CrystalMarkNet.FPU
                 }
 
                 count++;
+                boost = count % 20;
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    return (int)(count * 2);
+                    return count / 0.012427d / 2;
                 }
             }
         }

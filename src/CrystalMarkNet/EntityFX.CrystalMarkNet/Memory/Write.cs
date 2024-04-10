@@ -6,7 +6,7 @@ namespace EntityFX.CrystalMarkNet.Memory
     {
         private const int MemSize = 2048 * 1024;
 
-        protected override int BenchImplementation(CancellationToken cancellationToken)
+        protected override double BenchImplementation(CancellationToken cancellationToken)
         {
             uint[] memory = new uint[MemSize / 4];
             uint count = 0;
@@ -31,7 +31,7 @@ namespace EntityFX.CrystalMarkNet.Memory
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    return (int)count * (MemSize / 1024) / 1024 / 10;
+                    return count * (MemSize / 1024) / 1024;
                 }
             }
 

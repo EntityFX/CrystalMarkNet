@@ -38,7 +38,8 @@ namespace EntityFX.CrystalMarkNet
                  new MikoFpu(), new RandMeanSS(), new FFT(), new Mandelbrot()
             }, "FPU");
 
-            var groups = new CrystalBenchmarkGroup[] { memoryGroup, aluGroup, fpuGroup };
+            var groups = new CrystalBenchmarkGroup[] { aluGroup, fpuGroup, memoryGroup };
+            //var groups = new CrystalBenchmarkGroup[] { fpuGroup };
 
             foreach (var benchmarkGroup in groups)
             {
@@ -46,7 +47,7 @@ namespace EntityFX.CrystalMarkNet
                 //Console.WriteLine("{0,-17}{1,8}", string.Format("[ {0} ]", benchmarkGroup.Name), result);
                 benchmarkGroup.OnResult = (sender, pair) =>
                 {
-                    Console.WriteLine("{0,16}:{1,8}", pair.Key, pair.Value);
+                    Console.WriteLine("{0,16}:{1,8:#}", pair.Key, pair.Value);
                 };
 
                 var result = benchmarkGroup.Bench(threads);
@@ -58,8 +59,6 @@ namespace EntityFX.CrystalMarkNet
                 //}
 
             }
-
-            Console.ReadKey();
         }
 
 

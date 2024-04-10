@@ -7,7 +7,7 @@ namespace EntityFX.CrystalMarkNet.ALU
     {
         private const int MemSize = 2048;
 
-        protected override int BenchImplementation(CancellationToken cancellationToken)
+        protected override double BenchImplementation(CancellationToken cancellationToken)
         {
             uint[] memory = new uint[MemSize / 4];
             uint[] test = new uint[MemSize / 4];
@@ -37,7 +37,7 @@ namespace EntityFX.CrystalMarkNet.ALU
 
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    return (int)((double)count / 4.7 / 100);
+                    return count / 4.7d / 5.0d;
                 }
             }
         }
