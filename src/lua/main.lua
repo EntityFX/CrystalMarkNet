@@ -1,15 +1,19 @@
-require "utils"
-require "writer"
+require "utils/utils"
+require "utils/writer"
 require "crystalBenchmarkBase"
-require "fibonacci"
-require "fft"
-require "napierian"
+require "alu/fibonacci"
+require "alu/napierian"
+require "alu/eratosthenes"
+require "alu/quicksort"
+require "fpu/fft"
 
 local writer = Writer("Output.log", true, false)
 
 local becnhmarks = {
     Fibonacci(writer, false),
     Napierian(writer, false),
+    Eratosthenes(writer, false),
+    QuickSort(writer, false),
     FFT(writer, false)
 }
 

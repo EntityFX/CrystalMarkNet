@@ -14,13 +14,13 @@ function FFT:benchImplementation()
     local fr = {}
     local fi = {}
 
-    for ix = 0, FFT.N - 1, 1 do
+    for ix = 1, FFT.N, 1 do
         fr[ix] = 0
         fi[ix] = 0
     end
 
     while not self:isCancelled() do
-        for ix = 0, FFT.N - 1, 1 do
+        for ix = 1, FFT.N, 1 do
             x = -2 * PI + ix * 4.0 * PI / FFT.N
             fr[ix] = math.sin(x) + math.sin(2.0 * x)
             fi[ix] = 0.0
@@ -31,14 +31,14 @@ function FFT:benchImplementation()
 
         k = 1
         while k < FFT.N do
-            j = 0
-            while j < k do
+            j = 1
+            while j <= k do
                 w = 2.0 * PI / (2.0 * k)
                 wr = math.cos(w * j)
                 wi = -math.sin(w * j)
 
                 i = j
-                while i < FFT.N do
+                while i <= FFT.N do
                     xr = wr * fr[i + k] - wi * fi[i + k]
                     xi = wr * fi[i + k] + wi * fr[i + k]
                     fr[i + k] = fr[i] - xr
@@ -62,12 +62,12 @@ end
 function FFT:bitreverse(a, N)
     local j, k, l = 0, 0, 0
     local b = {}
-    for i = 0, N - 1 do
+    for i = 1, N do
         b[i] = 0
     end
 
-    for i = 0, N - 1, 1 do
-        k = 0
+    for i = 1, N, 1 do
+        k = 1
         l = math.floor(N / 2)
 
         j = 1
@@ -82,7 +82,7 @@ function FFT:bitreverse(a, N)
         b[i] = a[k];
     end
 
-    for i = 0, N - 1, 1 do
+    for i = 1, N, 1 do
         a[i] = b[i]
     end
 

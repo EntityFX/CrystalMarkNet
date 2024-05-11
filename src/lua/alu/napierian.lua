@@ -16,14 +16,14 @@ function Napierian:benchImplementation()
     while not self:isCancelled() do
         local m, k = 0, 0
 
-        for ix = 0, Napierian.N, 1 do
+        for ix = 1, Napierian.N, 1 do
             a[ix] = 0
             t[ix] = 0
         end
 
-        a[0] = 2
-        t[1] = math.floor(Napierian.RADIX / 2)
-        a[1] = t[1]
+        a[1] = 2
+        t[2] = math.floor(Napierian.RADIX / 2)
+        a[2] = t[2]
         k = 3
         m = 1
 
@@ -72,7 +72,7 @@ end
 
 function Napierian:add(a, b, c)
     local i, u = 0, 0
-    for i = Napierian.N, 0, -1 do
+    for i = Napierian.N, 1, -1 do
         u = u + a[i] + b[i]
         c[i] = bitand(u, Napierian.RADIX - 1)
         u = rshift(u, Napierian.RADIXBITS)
